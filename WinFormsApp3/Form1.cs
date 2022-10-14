@@ -26,50 +26,21 @@ namespace WinFormsApp3
             int ip02 = int.Parse(ip2.Text);
             int ip03 = int.Parse(ip3.Text);
             int ip04 = int.Parse(ip4.Text);
+            int[] tabIP1 = {ip01, ip02, ip03, ip04 };
             klasaIP.Visible = true;
             czyPoprawny.Visible = true;
             typAdresu.Visible = true;
 
-            // Czy poprawny
-            if (ip01 <= 255 && ip02 <= 255 && ip03 <= 255 && ip04 <= 255)
-            {            
-                czyPoprawny.Text = "adres ip jest poprawny";
-            }
-            else
-            {               
-                czyPoprawny.Text = "adres ip jest niepoprawny";
-            }
+            // Czy ip jest poprawne
+            czyPoprawneIP(tabIP1);
 
             // Jaka klasa
-            if (ip01 >= 0 && ip01 <= 127)
-            {
-                klasaIP.Text = "adres ip jest klasy A";
-                
-            }
-           else if(ip01 >= 128 && ip01 <= 191)
-            {
-                klasaIP.Text = "adres ip jest klasy B";
-            }
-            else if (ip01 >= 192 && ip01 <= 223)
-            {
-                klasaIP.Text = "adres ip jest klasy C";
-            }
-            else if (ip01 >= 224 && ip01 <= 239)
-            {
-                klasaIP.Text = "adres ip jest klasy D";
-            }
-            else if (ip01 >= 240 && ip01 <= 247)
-            {
-                klasaIP.Text = "adres ip jest klasy E";
-            }
-            else if (ip01 >= 248 && ip01 <= 255)
-            {
-                klasaIP.Text = "adres ip jest klasy F";
-            }
-           else
-            {
-                klasaIP.Text = "Adres jest niepoprawny";
-            }
+            jakaKlasaIP(tabIP1);
+
+
+
+
+            
 
             // Czy adres sieci czy hosta
             if (ip04 == 0)
@@ -118,6 +89,55 @@ namespace WinFormsApp3
             
             
         }
+
+
+        private void czyPoprawneIP(int[]tabIP01)
+        {
+            if (tabIP01[0] <= 255 && tabIP01[1] <= 255 && tabIP01[2] <= 255 && tabIP01[3] <= 255)
+            {
+                czyPoprawny.Text = "adres ip jest poprawny";
+            }
+            else
+            {
+                czyPoprawny.Text = "adres ip jest niepoprawny";
+            }
+        }
+
+        private void jakaKlasaIP(int[] tabIP01)
+        {
+            // klasyfikacja klas jest z strony https://soisk.info/index.php/Struktura_i_klasy_adresu_IP
+
+            if (tabIP01[0] >= 1 && tabIP01[0] <= 126)
+            {
+                klasaIP.Text = "adres ip jest klasy A";
+
+            }
+            else if (tabIP01[0] >= 127 && tabIP01[0] <= 191)
+            {
+                klasaIP.Text = "adres ip jest klasy B";
+            }
+            else if (tabIP01[0] >= 192 && tabIP01[0] <= 223)
+            {
+                klasaIP.Text = "adres ip jest klasy C";
+            }
+            else if (tabIP01[0] >= 224 && tabIP01[0] <= 239)
+            {
+                klasaIP.Text = "adres ip jest klasy D";
+            }
+            else if (tabIP01[0] >= 240 && tabIP01[0] <= 255)
+            {
+                klasaIP.Text = "adres ip jest klasy E";
+            }          
+            else
+            {
+                klasaIP.Text = "Adres IP jest niepoprawny";
+            }
+        }
+
+
+
+
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
