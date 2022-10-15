@@ -1,6 +1,11 @@
+using Microsoft.VisualBasic.Devices;
+using System.Net;
 using System.Runtime.Loader;
 using System.Windows.Forms.VisualStyles;
 
+
+// https://github.com/lduchosal/ipnetwork
+// Jak nie dzia³a to zainstalowaæ nuget " IPNetwork2"
 namespace WinFormsApp3
 {
     public partial class Form1 : Form
@@ -30,6 +35,8 @@ namespace WinFormsApp3
             klasaIP.Visible = true;
             czyPoprawny.Visible = true;
             typAdresu.Visible = true;
+            pierwHost.Visible = true;   
+            ostatHost.Visible = true;   
 
             // Czy ip jest poprawne
             czyPoprawneIP(tabIP1);
@@ -37,11 +44,12 @@ namespace WinFormsApp3
             // Jaka klasa
             jakaKlasaIP(tabIP1);
 
-            //Adres hosta czy sieci
+            //Adres hosta czy sieci czy mo¿e rozg³oszeniowy czy te¿ nie znajduje siê w puli adresów
             hostCzySiec(tabIP1);
 
+            // Obliczanie pierwszego i ostatniego hosta
             obliczanieIP(tabIP1);
-
+            obliczanieIP2(tabIP1);
 
 
 
@@ -101,56 +109,52 @@ namespace WinFormsApp3
 
         private void hostCzySiec(int[] tabIP01)
         {
-            if (tabIP01[3] == 0)
+            string ip01 = tabIP01[0].ToString();
+            string ip02 = tabIP01[1].ToString();
+            string ip03 = tabIP01[2].ToString();
+            string ip04 = tabIP01[3].ToString();
+            string ob = $"{ip01}.{ip02}.{ip03}.{ip04}/{maska1.Text}";
+            string ob2 = $"{ip01}.{ip02}.{ip03}.{ip04}";
+            IPNetwork ipObliczanie = IPNetwork.Parse(ob);          
+            IPAddress network = ipObliczanie.Network;
+            if (ob2 == network.ToString())
             {
                 typAdresu.Text = "Podany adres jest adresem sieci";
             }
-            else if (tabIP01[3] > 0 && tabIP01[3] <= 255)
+            else 
             {
                 typAdresu.Text = "Podany adres jest adresem hosta";
             }
-            // teoretycznie z koñcówk¹ 255 mo¿e byæ adresem rozg³oszeniowym, ale nie za ka¿dym razem musi byæ wiêc zostawiam ten przypadek jako adres hosta
             
-            else
-            {
-                typAdresu.Text = "Adres jest niepoprawny";
-            }
-
         }
 
         private void obliczanieIP(int[] tabIP01)
         {
-            string ip01Bin = Convert.ToString(tabIP01[0], 2);
-            string ip02Bin = Convert.ToString(tabIP01[1], 2);
-            string ip03Bin = Convert.ToString(tabIP01[2], 2);
-            string ip04Bin = Convert.ToString(tabIP01[3], 2);
-            string maskaBin;
-            maskaBin = null;
+            string ip01 = tabIP01[0].ToString();
+            string ip02 = tabIP01[1].ToString();
+            string ip03 = tabIP01[2].ToString();
+            string ip04 = tabIP01[3].ToString();
+            string ob = $"{ip01}.{ip02}.{ip03}.{ip04}/{maska1.Text}";
+            IPNetwork ipObliczanie = IPNetwork.Parse(ob);
             // musia³em przypisaæ do tego stringa wartoœæ null, bo inaczej nie dzia³a³o.
-            if (int.Parse(maska1.Text) <= 30 && int.Parse(maska1.Text) >= 1)
-            {
-                string ipBin = "0";
-                ipBin = string.Join(ip01Bin, ip02Bin, ip03Bin, ip04Bin);
 
-                for (int i = 0; i <= int.Parse(maska1.Text); i++)
-                {
-                    if (i > 0)
-                    {
-                        maskaBin = maskaBin + "1";
-                    }
-                    else
-                    {
-                        continue;
-                    }
+            IPAddress firstUsable = ipObliczanie.FirstUsable;
+            pierwHost.Text = $"Pierwszy adres hosta to: {firstUsable.ToString()}";
+        }
 
 
-                }
-                for (int a = 0; maskaBin.Length < 30; a++)
-                {
-                    maskaBin = maskaBin + "0";
-                }
-                test123.Text = maskaBin;
-            }
+        private void obliczanieIP2(int[] tabIP01)
+        {
+            string ip01 = tabIP01[0].ToString();
+            string ip02 = tabIP01[1].ToString();
+            string ip03 = tabIP01[2].ToString();
+            string ip04 = tabIP01[3].ToString();
+            string ob = $"{ip01}.{ip02}.{ip03}.{ip04}/{maska1.Text}";
+            IPNetwork ipObliczanie = IPNetwork.Parse(ob);
+            // musia³em przypisaæ do tego stringa wartoœæ null, bo inaczej nie dzia³a³o.
+
+            IPAddress lastUsable = ipObliczanie.LastUsable;
+            ostatHost.Text = $"Ostatni adres hosta to:{lastUsable.ToString()}";
         }
 
 

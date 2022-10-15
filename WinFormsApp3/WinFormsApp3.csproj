@@ -8,4 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="IPNetwork2" Version="2.6.472" />
+  </ItemGroup>
+
 </Project>

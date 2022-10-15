@@ -39,7 +39,8 @@
             this.klasaIP = new System.Windows.Forms.Label();
             this.typAdresu = new System.Windows.Forms.Label();
             this.maska1 = new System.Windows.Forms.NumericUpDown();
-            this.test123 = new System.Windows.Forms.Label();
+            this.pierwHost = new System.Windows.Forms.Label();
+            this.ostatHost = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ip2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ip4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ip3)).BeginInit();
@@ -159,29 +160,51 @@
             // 
             this.maska1.Location = new System.Drawing.Point(300, 104);
             this.maska1.Maximum = new decimal(new int[] {
-            999,
+            32,
+            0,
+            0,
+            0});
+            this.maska1.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.maska1.Name = "maska1";
             this.maska1.Size = new System.Drawing.Size(75, 23);
             this.maska1.TabIndex = 18;
+            this.maska1.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // test123
+            // pierwHost
             // 
-            this.test123.AutoSize = true;
-            this.test123.Location = new System.Drawing.Point(198, 304);
-            this.test123.Name = "test123";
-            this.test123.Size = new System.Drawing.Size(38, 15);
-            this.test123.TabIndex = 24;
-            this.test123.Text = "label3";
+            this.pierwHost.AutoSize = true;
+            this.pierwHost.Location = new System.Drawing.Point(67, 217);
+            this.pierwHost.Name = "pierwHost";
+            this.pierwHost.Size = new System.Drawing.Size(95, 15);
+            this.pierwHost.TabIndex = 24;
+            this.pierwHost.Text = "Pierwszy host to:";
+            this.pierwHost.Visible = false;
+            // 
+            // ostatHost
+            // 
+            this.ostatHost.AutoSize = true;
+            this.ostatHost.Location = new System.Drawing.Point(67, 241);
+            this.ostatHost.Name = "ostatHost";
+            this.ostatHost.Size = new System.Drawing.Size(88, 15);
+            this.ostatHost.TabIndex = 25;
+            this.ostatHost.Text = "Ostatni host to:";
+            this.ostatHost.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.test123);
+            this.Controls.Add(this.ostatHost);
+            this.Controls.Add(this.pierwHost);
             this.Controls.Add(this.typAdresu);
             this.Controls.Add(this.klasaIP);
             this.Controls.Add(this.maska1);
@@ -218,6 +241,7 @@
         private Label klasaIP;
         private Label typAdresu;
         private NumericUpDown maska1;
-        private Label test123;
+        private Label pierwHost;
+        private Label ostatHost;
     }
 }
