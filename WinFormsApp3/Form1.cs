@@ -37,58 +37,23 @@ namespace WinFormsApp3
             // Jaka klasa
             jakaKlasaIP(tabIP1);
 
+            //Adres hosta czy sieci
+            hostCzySiec(tabIP1);
+
+            obliczanieIP(tabIP1);
 
 
 
-            
 
-            // Czy adres sieci czy hosta
-            if (ip04 == 0)
-            {
-                typAdresu.Text = "Podany adres jest adresem sieci";
-            }
-            else if (ip04 > 0 && ip04 <= 255)
-            {
-                typAdresu.Text = "Podany adres jest adresem hosta";
-            }
-            else
-            {
-                typAdresu.Text = "Adres jest niepoprawny";
-            }
 
-            // do obliczania pierwszego/ostatniego hosta.
-            string ip01Bin = Convert.ToString(ip01, 2);
-            string ip02Bin = Convert.ToString(ip02, 2);
-            string ip03Bin = Convert.ToString(ip03, 2);
-            string ip04Bin = Convert.ToString(ip04, 2);
-            string maskaBin = "0"; 
-            if (int.Parse(maska1.Text) <= 30 && int.Parse(maska1.Text) >= 1) {
-                string ipBin = "0";
-                ipBin = string.Join(ip01Bin, ip02Bin, ip03Bin, ip04Bin);
-                
-                for (int i = 0; i <= int.Parse(maska1.Text); i++)
-                {
-                    if(maskaBin == "0")
-                    {
-                        maskaBin = "2";
-                    }
-                    else if(maskaBin == "2")
-                    {
-                        maskaBin = "1";
-                    }
-                    else
-                    {
-                        maskaBin = maskaBin + "1";
-                    }
-                  
-                    
-                } 
-                test123.Text = maskaBin;
-            }
-               
-            
-            
+
+
+
+
         }
+
+
+
 
 
         private void czyPoprawneIP(int[]tabIP01)
@@ -133,6 +98,68 @@ namespace WinFormsApp3
                 klasaIP.Text = "Adres IP jest niepoprawny";
             }
         }
+
+        private void hostCzySiec(int[] tabIP01)
+        {
+            if (tabIP01[3] == 0)
+            {
+                typAdresu.Text = "Podany adres jest adresem sieci";
+            }
+            else if (tabIP01[3] > 0 && tabIP01[3] <= 255)
+            {
+                typAdresu.Text = "Podany adres jest adresem hosta";
+            }
+            // teoretycznie z koñcówk¹ 255 mo¿e byæ adresem rozg³oszeniowym, ale nie za ka¿dym razem musi byæ wiêc zostawiam ten przypadek jako adres hosta
+            
+            else
+            {
+                typAdresu.Text = "Adres jest niepoprawny";
+            }
+
+        }
+
+        private void obliczanieIP(int[] tabIP01)
+        {
+            string ip01Bin = Convert.ToString(tabIP01[0], 2);
+            string ip02Bin = Convert.ToString(tabIP01[1], 2);
+            string ip03Bin = Convert.ToString(tabIP01[2], 2);
+            string ip04Bin = Convert.ToString(tabIP01[3], 2);
+            string maskaBin;
+            maskaBin = null;
+            // musia³em przypisaæ do tego stringa wartoœæ null, bo inaczej nie dzia³a³o.
+            if (int.Parse(maska1.Text) <= 30 && int.Parse(maska1.Text) >= 1)
+            {
+                string ipBin = "0";
+                ipBin = string.Join(ip01Bin, ip02Bin, ip03Bin, ip04Bin);
+
+                for (int i = 0; i <= int.Parse(maska1.Text); i++)
+                {
+                    if (i > 0)
+                    {
+                        maskaBin = maskaBin + "1";
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+
+                }
+                for (int a = 0; maskaBin.Length < 30; a++)
+                {
+                    maskaBin = maskaBin + "0";
+                }
+                test123.Text = maskaBin;
+            }
+        }
+
+
+
+
+
+
+
+
 
 
 
